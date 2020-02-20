@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<head>
+<link rel="stylesheet" href="stylefile.css">
+<meta charset="UTF-8">
+<title> CUSTOMER INFORMATION </title>
+</head>
+ 
+<h1 align="center"> CUSTOMER INFORMATION </h1> <!-- Actual heading text -->
+
+<body>
+<script>
+	
+		var divs = 
+		[
+		
+		"errorFirstname", 
+		  "errorLastname", 
+		  "errorEmail",
+		];
+		
+		function validateinformation()
+		{
+
+			var inputs = [];
+			inputs[0] = document.getElementById("firstname").value;
+			inputs[1] = document.getElementById("lastname").value;
+			inputs[2] = document.getElementById("email").value;
+			
+
+			var errors = [];
+			errors[0] = "<span style='color:red'> INVALID FIRST NAME!</span>"
+			errors[1] = "<span style='color:red'> INVALID LAST NAME!</span>"
+			errors[2] = "<span style='color:red'> INVALID EMAIL!</span>"
+	
+			
+			
+			var i;
+			for (i=0; i<inputs.length; i++)
+			{
+				var errorMessage = errors[i];
+				var entry = divs[i];
+				
+	
+				if (inputs[i] == "")
+					document.getElementById(entry).innerHTML = errorMessage;
+				
+				else if (i == 2)
+				{
+				
+					var atpos = inputs[i].indexOf("@");  
+					var dotpos = inputs[i].lastIndexOf(".");
+					
+					
+					if (atpos < 1 || dotpos < atpos + 2 || dotpos >= inputs[i].length)
+						document.getElementById(entry).innerHTML = "<span style = 'color:red' > Please enter a valid email address!</span>";
+				 else
+						
+						document.getElementById(entry).innerHTML = "Good!";
+				}
+				else if (i == 5) 
+				{
+					
+					if (inputs[4] != inputs[5]) 
+						document.getElementById(entry).innerHTML = "<span style = 'color:red'> Your passwords don't match!</span>";
+					else
+						document.getElementById(entry).innerHTML = "Good!";
+				}
+				else
+					document.getElementById(entry).innerHTML = "Good!";
+			}
+		}
+		
+		
+		function lastcreateValidation() <!-- THIS IS WHEN YOU PUSH CREATE -->
+		{
+			var i;
+			var flag = 1;
+			for (i=0; i<divs.length; i++)
+			{
+				
+				if (document.getElementById(divs[i]).innerHTML != "Good!")
+					flag = 0;
+			}
+			
+			if (flag == 1) 
+				document.getElementById("errorFinal").innerHTML = "Data Saved!"
+		}
+	</script>
+<center> <!-- alignment -->
+<table>
+<br>
+		<tr>
+			<td> First Name:</td>
+			<td><input type="text" id="firstname" onkeyup="validateinformation();"/></td>
+			<td><div id="errorFirstname"></div></td>
+		</tr>
+		<tr>
+			<td> Last Name:</td>
+			<td><input type="text" id="lastname" onkeyup="validateinformation();"/></td>
+			<td><div id="errorLastname"></div></td>
+		</tr>
+		<tr>
+			<td> Email:</td>
+			<td><input type="text" id="email" onkeyup="validateinformation();"/></td>
+			<td><div id="errorEmail"></div></td>
+		</tr>
+		<tr>
+			<td><input type="button" id="create" value="Submit" onclick="validateinformation();lastcreateValidation();"/></td>
+			<td><div id="errorFinal"></div></td>
+		</tr>
+	</table>
+</body>
+</html>
